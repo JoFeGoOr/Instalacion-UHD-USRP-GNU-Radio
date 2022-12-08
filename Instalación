@@ -1,6 +1,6 @@
-Para comenzar con la instalacion, debemos conocer los preambulos a conciderar, se instalara la version 4.2.0.1 de los drivers para la USRP conocidos 
+Para comenzar con la instalacion, debemos conocer los preambulos a conciderar, se instalara la version 4.3.0.0 de los drivers para la USRP conocidos 
 como UHD (USRP Hardware Drivers), estos drivers deben ser instalados tanto en la PC de desarrollo como en la USRP, ademas se instalara GNU-Radio en su 
-version 3.8.0.5.
+version 3.8-maint.
 
 -----------------------------------------------
 Instalacion en la USRP
@@ -90,16 +90,14 @@ $ sudo dpkg-reconfigure dash
 
 Seleccionamos la opcion "no"
 
-$ sudo apt -y install git swig cmake doxygen build-essential libboost-all-dev libtool libusb-1.0-0 libusb-1.0-0-dev libudev-dev libncurses5-dev 
-  libfftw3-bin libfftw3-dev libfftw3-doc libcppunit-1.14-0 libcppunit-dev libcppunit-doc ncurses-bin cpufrequtils python-numpy python-numpy-doc 
-  python-numpy-dbg python-scipy python-docutils qt4-bin-dbg qt4-default qt4-doc libqt4-dev libqt4-dev-bin python-qt4 python-qt4-dbg python-qt4-dev 
-  python-qt4-doc python-qt4-doc libqwt6abi1 libfftw3-bin libfftw3-dev libfftw3-doc ncurses-bin libncurses5 libncurses5-dev libncurses5-dbg 
-  libfontconfig1-dev libxrender-dev libpulse-dev swig g++ automake autoconf libtool python-dev libfftw3-dev libcppunit-dev libboost-all-dev 
-  libusb-dev libusb-1.0-0-dev fort77 libsdl1.2-dev python-wxgtk3.0 git libqt4-dev python-numpy ccache python-opengl libgsl-dev python-cheetah 
-  python-mako python-lxml doxygen qt4-default qt4-dev-tools libusb-1.0-0-dev libqwtplot3d-qt5-dev pyqt4-dev-tools python-qwt5-qt4 cmake git wget 
-  libxi-dev gtk2-engines-pixbuf r-base-dev python-tk liborc-0.4-0 liborc-0.4-dev libasound2-dev python-gtk2 libzmq3-dev libzmq5 python-requests 
-  python-sphinx libcomedi-dev python-zmq libqwt-dev libqwt6abi1 python-six libgps-dev libgps23 gpsd gpsd-clients python-gps python-setuptools 
-  python3-pyqt5 dnsmasq sshfs
+$ sudo apt install git cmake g++ libboost-all-dev libgmp-dev swig \
+python3-numpy python3-mako python3-sphinx python3-lxml \
+doxygen libfftw3-dev libsdl1.2-dev libgsl-dev libqwt-qt5-dev \
+libqt5opengl5-dev python3-pyqt5 liblog4cpp5-dev libzmq3-dev \
+python3-yaml python3-click python3-click-plugins python3-zmq \
+python3-scipy python3-gi python3-gi-cairo gobject-introspection \
+gir1.2-gtk-3.0 build-essential libusb-1.0-0-dev python3-docutils \
+python3-setuptools python3-ruamel.yaml python-is-python3
   
 - Creamos las carpetas de trabajo, este paso podria realizarse en otra carpeta y tendria los mismo resultados, pero se recomienda iniciar la 
   instalacion con un cierto nivel de orden ya que asi se puede explorar la posibilidad de instalar diferentes versiones de UHD, lo que podria 
@@ -111,14 +109,10 @@ $ mkdir -p ~/rfnoc/src
 - Instalamos UHD v4.2.0.1, la misma version que los drivers instalados en la USRP, esta paso es crucial por lo que recomienda tener especial cuidado.
 
 $ cd ~/rfnoc/src    
-$ git clone --recursive https://github.com/EttusResearch/uhd
-$ cd uhd
-$ git checkout v4.2.0.1
-$ git submodule update --init --recursive
-$ cd host
-$ mkdir build-host
-$ cd build-host
-$ cmake -DENABLE_E300=ON -DENABLE_GPSD=ON -DENABLE_RFNOC=ON ..
+$ git clone --branch UHD-4.3 https://github.com/ettusresearch/uhd.git uhd
+$ mkdir uhd/host/build
+$ cd uhd/host/build
+$ cmake ..
 $ make -j4
 $ sudo make install
 $ sudo ldconfig
@@ -133,13 +127,20 @@ $ sudo uhd_images_downloader
   el manejo de errores presentes dentro del posecamiento de señales.
   
 $ cd ~/rfnoc/src 
-$ git clone --recursive https://github.com/gnuradio/gnuradio
-$ cd gnuradio/
-$ git checkout v3.8.5.0
-$ git submodule update --init --recursive
-$ mkdir build-host
-$ cd build-host
+$ git clone --branch maint-3.8 --recursive https://github.com/gnuradio/gnuradio.git gnuradio
+$ mkdir gnuradio/build
+$ cd gnuradio/build
 $ cmake ..
+$ make -j4
+$ sudo make install
+$ sudo ldconfig
+
+- Instalamos gr-ettus
+
+$ git clone --branch maint-3.8-uhd4.3 https://github.com/ettusresearch/gr-ettus.git gr-ettus
+$ mkdir gr-ettus/build
+$ cd gr-ettus/build
+$ cmake --DENABLE_QT=True ..
 $ make -j4
 $ sudo make install
 $ sudo ldconfig
