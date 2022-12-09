@@ -5,24 +5,24 @@ version 3.8-maint.
 -----------------------------------------------
 Instalacion en la USRP
 
-En funcion de la simplesa, la parte de la instalacion de UHD en la USRP se hara en Windows 10, el resto de los pasos deben ser hecho en Ubuntu 18.04 LTS
+En funcion de la simplesa, la parte de la instalacion de UHD en la USRP se hara en Windows 10, el resto de los pasos deben ser hecho en Ubuntu 20.04 LTS
 
 Comenzamos sacando la memoria USB que posee la USRP y la conectamos a nuestro PC de desarrollo.
 
 Luego descargamos todo el software necesario:
 
 - Descargamos la imagen de UHD con el link a continuacion:
-https://files.ettus.com/binaries/cache/e3xx/meta-ettus-v4.2.0.1/e3xx_e310_sg3_sdimg_default-v4.2.0.1.zip
+https://files.ettus.com/binaries/cache/e3xx/meta-ettus-v4.3.0.0/e3xx_e310_sg3_sdimg_default-v4.3.0.0.zip
 
 - Descargamos el programa gratuito win32diskimager, el cual nos permite montar la imagen en la memoria USB:
 https://win32diskimager.org/#download
 
-- Instalamos y abrimos el programa win32diskimager, debemos elegir el archivo "e3xx_e310_sg3_sdimg_default-v4.2.0.1.zip", la memoria USB y le damos 
-  al boton de WRITE, esto no deberia demorar mas de 5 minutos.
+- Instalamos y abrimos el programa win32diskimager, debemos elegir el archivo "e3xx_e310_sg3_sdimg_default-v4.3.0.0.zip", la memoria USB y le damos 
+  al boton de WRITE, esto no deberia demorar más de 5 minutos.
 
 - Una vez finalizado el proceso de montura de imagen, quitamos la memoria USB de nuestra PC de desarrollo y la insertamos en la USRP.
 
-Hasta aqui llegamos respecto a Windows 10, de ahora en adelante todo el proceso sera hecho en Ubuntu 18.04 LTS
+Hasta aqui llegamos respecto a Windows 10, de ahora en adelante todo el proceso sera hecho en Ubuntu 20.04 LTS
 
 - Con la memoria USB ya en la USRP, conectamos el sistema embebido a la PC de desarrollo tanto por la conexcion USB-C como por la conexion RED y 
   encendemos la USRP.
@@ -43,7 +43,7 @@ una vez dentro, haremos lo siguiente.
 
 $ uhd_find_devices
 
-para asegurarnos que instalamos la vesion correcta de UHD (v4.2.0.1), ya seguros continuamos con la configuracion de la USRP.
+para asegurarnos que instalamos la vesion correcta de UHD (v4.3.0.0), ya seguros continuamos con la configuracion de la USRP.
 
 $ ifconfig
 
@@ -113,6 +113,7 @@ $ git clone --branch UHD-4.0 \
   https://github.com/ettusresearch/uhd.git uhd
 $ mkdir uhd/host/build; cd uhd/host/build; cmake ..
 $ make -j4; sudo make install
+$ sudo ldconfig
 
 - Descargamos los archivos o "imagen" para los drives del FPGA.
 
@@ -128,6 +129,7 @@ $ git clone --branch maint-3.8 --recursive \
   https://github.com/gnuradio/gnuradio.git gnuradio
 $ mkdir gnuradio/build; cd gnuradio/build; cmake ..
 $ make -j4; sudo make install
+$ sudo ldconfig
 
 - Instalamos gr-ettus
 
@@ -136,6 +138,7 @@ $ git clone --branch maint-3.8-uhd4.0 \
   https://github.com/ettusresearch/gr-ettus.git gr-ettus
 $ mkdir gr-ettus/build; cd gr-ettus/build; cmake --DENABLE_QT=True ..
 $ make -j4; sudo make install
+$ sudo ldconfig
 
 - Para asegurarse de que se instalaron las versiones corretas de cada software, probamos los siguientes comandos, ellos deben devolver las version
   instaladas.
@@ -143,7 +146,26 @@ $ make -j4; sudo make install
 $ uhd_usrp_probe --version
 $ gnuradio-config-info --version
 
-- Para inicia GNU-Radio, se debe inciar desde la consola, con el comando que se presenta a continuacion.
+Existe la alta posibilidad de que aún realizando toda esta instalacion, cuando se intente ejecutar gnuradio, nos aparezca un error referente a 
+"LD_LIBRARY_PATH", para solucionar este problema se hace lo relatado a continuacion.
+
+- debemo modificar un archivo de ejecucion.
+
+$ cd
+$ nano ~/.profile
+
+- se abrira un editor de texto, al final de este archivo debemos agregar la siguiente linea de codigo.
+
+$ export PYTHONPATH=/usr/local/lib/python3/dist-packages:$PYTHONPATH
+
+- luego guardamos el archivo con "ctrl+O" y salimos con "ctrl+X", ejecutamos los siguientes comandos
+
+$ source ~/.profile
+$ sudo ldconfig
+
+- por ultimo, reiniciamos la PC de desarrollo y se daria por finalizada la instalacion de los harremientas basicas para utilizar la USRP E312 con GNU-Radio
+
+- Para iniciar GNU-Radio, se debe inciar desde la consola, con el comando que se presenta a continuacion.
 
 $ gnuradio-companion
 
