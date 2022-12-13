@@ -103,12 +103,11 @@ python3-setuptools python3-ruamel.yaml python-is-python3
   instalacion con un cierto nivel de orden ya que asi se puede explorar la posibilidad de instalar diferentes versiones de UHD, lo que podria 
   resultar util en las etapas de debug el desarrollo de software para la USRP.
   
-$ mkdir -p ~/rfnoc
-$ mkdir -p ~/rfnoc/src
+$ mkdir -p ~/src
   
 - Instalamos UHD v4.2.0.1, la misma version que los drivers instalados en la USRP, esta paso es crucial por lo que recomienda tener especial cuidado.
 
-$ cd ~/rfnoc/src    
+$ cd ~/src    
 $ git clone --branch UHD-4.0 \
   https://github.com/ettusresearch/uhd.git uhd
 $ mkdir uhd/host/build; cd uhd/host/build; cmake ..
@@ -124,7 +123,7 @@ $ sudo uhd_images_downloader
   aun asi, el mismo fabricante recomienda esta version porque ha sido la que mas soporte a recibido y la que mas documentacion posee, en espacial en
   el manejo de errores presentes dentro del posecamiento de señales.
   
-$ cd ~/rfnoc/src 
+$ cd ~/src 
 $ git clone --branch maint-3.8 --recursive \
   https://github.com/gnuradio/gnuradio.git gnuradio
 $ mkdir gnuradio/build; cd gnuradio/build; cmake ..
@@ -133,7 +132,7 @@ $ sudo ldconfig
 
 - Instalamos gr-ettus
 
-$ cd ~/rfnoc/src 
+$ cd ~/src 
 $ git clone --branch maint-3.8-uhd4.0 \
   https://github.com/ettusresearch/gr-ettus.git gr-ettus
 $ mkdir gr-ettus/build; cd gr-ettus/build; cmake --DENABLE_QT=True ..
