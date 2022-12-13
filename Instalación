@@ -105,10 +105,10 @@ python3-setuptools python3-ruamel.yaml python-is-python3
   
 $ mkdir -p ~/src
   
-- Instalamos UHD v4.2.0.1, la misma version que los drivers instalados en la USRP, esta paso es crucial por lo que recomienda tener especial cuidado.
+- Instalamos UHD v4.3.0.0, la misma version que los drivers instalados en la USRP, esta paso es crucial por lo que recomienda tener especial cuidado.
 
 $ cd ~/src    
-$ git clone --branch UHD-4.0 \
+$ git clone --branch UHD-4.3 \
   https://github.com/ettusresearch/uhd.git uhd
 $ mkdir uhd/host/build; cd uhd/host/build; cmake ..
 $ make -j4; sudo make install
