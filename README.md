@@ -1,4 +1,4 @@
-Para comenzar con la instalacion, debemos conocer los preambulos a conciderar, se instalara la version 4.3.0.0 de los drivers para la USRP conocidos 
+Para comenzar con la instalacion, debemos conocer los preambulos a considerar, se instalara la versión 4.3.0.0 de los drivers para la USRP conocidos 
 como UHD (USRP Hardware Drivers), estos drivers deben ser instalados tanto en la PC de desarrollo como en la USRP, ademas se instalara GNU-Radio en su 
 version 3.8-maint.
 
