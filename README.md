@@ -55,13 +55,13 @@ $ vim interfaces
 se nos abrira un editor de texto, debemos presionar la tecla "esc" y luego la tecla "i" para entrar en modo insert, en este modo añadiremos el 
 siguiente texto:
 
-$ auto lo
-$ iface lo inet loopback
+ auto lo
+ iface lo inet loopback
 
-$ auto eth0
-$ iface eth0 inet static
-$ address 192.168.10.42
-$ netmask 255.255.255.0
+ auto eth0
+ iface eth0 inet static
+ address 192.168.10.42
+ netmask 255.255.255.0
 
 presionamos la tecla "esc", escribimos :wq y enter para guardar un archivo llamado "interfaces" en la carpeta "/etc/network", ejecutamos el archivo:
 
