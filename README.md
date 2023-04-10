@@ -24,7 +24,7 @@ Con la memoria USB ya en la USRP, conectamos el sistema embebido a la PC de desa
 
 En la PC de desarrollo abrimos una consola de comando he iniciaremos una conexion con la USRP, para haremos lo siguiente.
 
-ejecutamos lo siguiente:
+Ejecutamos lo siguiente:
 
 ```
 $ cd /dev
@@ -32,42 +32,52 @@ $ ls
 $ sudo screen /dev/ttyUSB0 115200
 ```
 
-escribimos nuestras credenciales y accedemos a una nueva pantalla de login, como es una nueva instalacion, el ususarios es root y no hay contraseña, 
-una vez dentro, haremos lo siguiente.
+Escribimos nuestras credenciales y accedemos a una nueva pantalla de login, como es una nueva instalacion, el ususarios es root y no hay contraseña, una vez dentro, haremos lo siguiente.
 
+```
 $ uhd_find_devices
+```
 
-para asegurarnos que instalamos la vesion correcta de UHD (v4.3.0.0), ya seguros continuamos con la configuracion de la USRP.
+Para asegurarnos que instalamos la vesion correcta de UHD (v4.3.0.0), ya seguros continuamos con la configuracion de la USRP.
 
+```
 $ ifconfig
+```
 
-notaremos que la USRP no tiene una direcion IP y debemos configurarla de manera estica, para ello haremos lo siguiente.
+Notaremos que la USRP no tiene una direcion IP y debemos configurarla de manera estica, para ello haremos lo siguiente.
 
+```
 $ cd /etc/network
 $ vim interfaces 
+```
 
-se nos abrira un editor de texto, debemos presionar la tecla "esc" y luego la tecla "i" para entrar en modo insert, en este modo añadiremos el 
-siguiente texto:
+Se nos abrira un editor de texto, debemos presionar la tecla "esc" y luego la tecla "i" para entrar en modo insert, en este modo añadiremos el siguiente texto:
 
- $ auto lo
- $ iface lo inet loopback
+```
+$ auto lo
+$ iface lo inet loopback
 
- $ auto eth0
- $ iface eth0 inet static
- $ address 192.168.10.42
- $ netmask 255.255.255.0
+$ auto eth0
+$ iface eth0 inet static
+$ address 192.168.10.42
+$ netmask 255.255.255.0
+```
 
-presionamos la tecla "esc", escribimos :wq y enter para guardar un archivo llamado "interfaces" en la carpeta "/etc/network", ejecutamos el archivo:
+Presionamos la tecla "esc", escribimos :wq y enter para guardar un archivo llamado "interfaces" en la carpeta "/etc/network", ejecutamos el archivo:
 
+```
 $ ifup eth0
+```
+
+Con el comando a continuacion, podemos asegurar que la asignacino de la ip de manera estatica se realizo de manera satisfactoria, recordar que la IP estatica para la conexion lan es 192.168.10.42
+
+```
 $ ifconfig
+```
 
-con esto ya podemos constatar que la USRP esta con una IP estatica lista para ser usada. cabe destacar que con esta forma, cada vez que queramos utilizar la USRP debemos accedar a ella mediante el comando screen y ejecutar el archivo "interfaces" para que se le asigne su respectiva IP.
+***Con esto ya podemos constatar que la USRP esta con una IP estatica lista para ser usada. Cabe destacar que con esta forma, cada vez que queramos utilizar la USRP debemos accedar a ella mediante el comando screen y ejecutar el archivo "interfaces" para que se le asigne su respectiva IP.***
 
-Ya con la USRP configurada y con su ip bien asignada, podemos continuar con la instalacion del software necesario para realizar procesamiento de 
-señales, cabe destacar que para concretar la conexion con la USRP, se debe configurar una conexion de red cableada de manera manual, ya que hasta la
-fecha, la USRP no ha demostrado utilizar el protocolo DHCP, para asegurarnos de que la conexion se configuro con exito, debemos desde la PC, realizar
-un ping hacia el dispositivo.
+Ya con la USRP configurada y con su ip bien asignada, podemos continuar con la instalacion del software necesario para realizar procesamiento de señales, cabe destacar que para concretar la conexion con la USRP, se debe configurar una conexion de red cableada de manera manual, ya que hasta la fecha, la USRP no ha demostrado utilizar el protocolo DHCP, para asegurarnos de que la conexion se configuro con exito, debemos desde la PC, realizar un ping hacia el dispositivo.
 
 # instalacion en PC Host
 
@@ -75,23 +85,19 @@ Ya seguros de que la comunicacion entre PC y la USRP, procedemos a instalar todo
 esta instalacion tomo como base, el sistema operativo Ubuntu 20.04 LTS, pero puede ser llevado a demas distribuciones teniendo cuidado de instalar las
 dependencias correctas.
 
-- Actualizamos las bibliotecas ya instaladas y las dependencias.
+Actualizamos las bibliotecas ya instaladas y las dependencias.
 
+```
 $ sudo apt update
 $ sudo apt upgrade
-
 $ sudo dpkg-reconfigure dash
+```
 
 Seleccionamos la opcion "no"
 
-$ sudo apt install git cmake g++ libboost-all-dev libgmp-dev swig \
-python3-numpy python3-mako python3-sphinx python3-lxml \
-doxygen libfftw3-dev libsdl1.2-dev libgsl-dev libqwt-qt5-dev \
-libqt5opengl5-dev python3-pyqt5 liblog4cpp5-dev libzmq3-dev \
-python3-yaml python3-click python3-click-plugins python3-zmq \
-python3-scipy python3-gi python3-gi-cairo gobject-introspection \
-gir1.2-gtk-3.0 build-essential libusb-1.0-0-dev python3-docutils \
-python3-setuptools python3-ruamel.yaml python-is-python3
+```
+$ sudo apt install git cmake g++ libboost-all-dev libgmp-dev swig python3-numpy python3-mako python3-sphinx python3-lxml doxygen libfftw3-dev libsdl1.2-dev libgsl-dev libqwt-qt5-dev libqt5opengl5-dev python3-pyqt5 liblog4cpp5-dev libzmq3-dev python3-yaml python3-click python3-click-plugins python3-zmq python3-scipy python3-gi python3-gi-cairo gobject-introspection gir1.2-gtk-3.0 build-essential libusb-1.0-0-dev python3-docutils python3-setuptools python3-ruamel.yaml python-is-python3
+```
   
 - Creamos las carpetas de trabajo, este paso podria realizarse en otra carpeta y tendria los mismo resultados, pero se recomienda iniciar la 
   instalacion con un cierto nivel de orden ya que asi se puede explorar la posibilidad de instalar diferentes versiones de UHD, lo que podria 
