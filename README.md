@@ -1,6 +1,4 @@
-***Para comenzar con la instalacion, debemos conocer los preambulos a considerar, se instalara la versión 4.3.0.0 de los drivers para la USRP conocidos 
-como UHD (USRP Hardware Drivers), estos drivers deben ser instalados tanto en la PC de desarrollo como en la USRP, ademas se instalara GNU-Radio en su 
-version 3.8-maint.***
+***Para comenzar con la instalacion, debemos conocer los preambulos a considerar, se instalara la versión 4.3.0.0 de los drivers para la USRP conocidos como UHD (USRP Hardware Drivers), estos drivers deben ser instalados tanto en la PC de desarrollo como en la USRP, ademas se instalara GNU-Radio en su version 3.8-maint.***
 
 # Instalacion en la USRP
 
@@ -67,17 +65,17 @@ presionamos la tecla "esc", escribimos :wq y enter para guardar un archivo llama
 $ ifup eth0
 $ ifconfig
 
-con esto ya podemos constatar que la USRP esta con una IP estatica lista para ser usada.
-cabe destacar que con esta forma, cada vez que queramos utilizar la USRP debemos accedar a ella mediante el comando screen y ejecutar el archivo 
-"interfaces" para que se le asigne su respectiva IP.
+con esto ya podemos constatar que la USRP esta con una IP estatica lista para ser usada. cabe destacar que con esta forma, cada vez que queramos utilizar la USRP debemos accedar a ella mediante el comando screen y ejecutar el archivo "interfaces" para que se le asigne su respectiva IP.
 
 Ya con la USRP configurada y con su ip bien asignada, podemos continuar con la instalacion del software necesario para realizar procesamiento de 
 señales, cabe destacar que para concretar la conexion con la USRP, se debe configurar una conexion de red cableada de manera manual, ya que hasta la
 fecha, la USRP no ha demostrado utilizar el protocolo DHCP, para asegurarnos de que la conexion se configuro con exito, debemos desde la PC, realizar
 un ping hacia el dispositivo.
 
+# instalacion en PC Host
+
 Ya seguros de que la comunicacion entre PC y la USRP, procedemos a instalar todo el software necesario para usar GNU-Radio junto a la USRP e312,
-esta instalacion tomo como base, el sistema operativo Ubuntu 18.04 LTS, pero puede ser llevado a demas distribuciones teniendo cuidado de instalar las
+esta instalacion tomo como base, el sistema operativo Ubuntu 20.04 LTS, pero puede ser llevado a demas distribuciones teniendo cuidado de instalar las
 dependencias correctas.
 
 - Actualizamos las bibliotecas ya instaladas y las dependencias.
