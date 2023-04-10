@@ -8,32 +8,28 @@ Comenzamos sacando la memoria USB que posee la USRP y la conectamos a nuestro PC
 
 Luego descargamos todo el software necesario:
 
-- Descargamos la imagen de UHD con el link a continuacion:
++ Descargamos la imagen de UHD con el link a continuacion:
 https://files.ettus.com/binaries/cache/e3xx/meta-ettus-v4.3.0.0/e3xx_e310_sg3_sdimg_default-v4.3.0.0.zip
 
-- Descargamos el programa gratuito win32diskimager, el cual nos permite montar la imagen en la memoria USB:
++ Descargamos el programa gratuito win32diskimager, el cual nos permite montar la imagen en la memoria USB:
 https://win32diskimager.org/#download
 
-- Instalamos y abrimos el programa win32diskimager, debemos elegir el archivo "e3xx_e310_sg3_sdimg_default-v4.3.0.0.zip", la memoria USB y le damos 
-  al boton de WRITE, esto no deberia demorar más de 5 minutos.
+Instalamos y abrimos el programa win32diskimager, debemos elegir el archivo "e3xx_e310_sg3_sdimg_default-v4.3.0.0.zip", la memoria USB y le damos al boton de WRITE, esto no deberia demorar más de 5 minutos.
 
-- Una vez finalizado el proceso de montura de imagen, quitamos la memoria USB de nuestra PC de desarrollo y la insertamos en la USRP.
+Una vez finalizado el proceso de montura de imagen, quitamos la memoria USB de nuestra PC de desarrollo y la insertamos en la USRP.
 
 Hasta aqui llegamos respecto a Windows 10, de ahora en adelante todo el proceso sera hecho en Ubuntu 20.04 LTS
 
-- Con la memoria USB ya en la USRP, conectamos el sistema embebido a la PC de desarrollo tanto por la conexcion USB-C como por la conexion RED y 
-  encendemos la USRP.
+Con la memoria USB ya en la USRP, conectamos el sistema embebido a la PC de desarrollo tanto por la conexcion USB-C como por la conexion RED y encendemos la USRP.
 
-- En la PC de desarrollo abrimos una consola de comando he iniciaremos una conexion con la USRP, para haremos lo siguiente:
+En la PC de desarrollo abrimos una consola de comando he iniciaremos una conexion con la USRP, para haremos lo siguiente.
 
 ejecutamos lo siguiente:
 
+`
 $ cd /dev
 $ ls
-
-buscamos una carpeta llamada "ttyUSB0" o similar y accedemos a ella:
-
-$ sudo screen /dev/ttyUSB0 115200
+$ sudo screen /dev/ttyUSB0 115200`
 
 escribimos nuestras credenciales y accedemos a una nueva pantalla de login, como es una nueva instalacion, el ususarios es root y no hay contraseña, 
 una vez dentro, haremos lo siguiente.
