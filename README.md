@@ -85,7 +85,7 @@ Ya seguros de que la comunicacion entre PC y la USRP, procedemos a instalar todo
 esta instalacion tomo como base, el sistema operativo Ubuntu 20.04 LTS, pero puede ser llevado a demas distribuciones teniendo cuidado de instalar las
 dependencias correctas.
 
-Actualizamos las bibliotecas ya instaladas y las dependencias.
+Actualizamos las bibliotecas y las dependencias ya instaladas.
 
 ```
 $ sudo apt update
@@ -99,14 +99,15 @@ Seleccionamos la opcion "no"
 $ sudo apt install git cmake g++ libboost-all-dev libgmp-dev swig python3-numpy python3-mako python3-sphinx python3-lxml doxygen libfftw3-dev libsdl1.2-dev libgsl-dev libqwt-qt5-dev libqt5opengl5-dev python3-pyqt5 liblog4cpp5-dev libzmq3-dev python3-yaml python3-click python3-click-plugins python3-zmq python3-scipy python3-gi python3-gi-cairo gobject-introspection gir1.2-gtk-3.0 build-essential libusb-1.0-0-dev python3-docutils python3-setuptools python3-ruamel.yaml python-is-python3
 ```
   
-- Creamos las carpetas de trabajo, este paso podria realizarse en otra carpeta y tendria los mismo resultados, pero se recomienda iniciar la 
-  instalacion con un cierto nivel de orden ya que asi se puede explorar la posibilidad de instalar diferentes versiones de UHD, lo que podria 
-  resultar util en las etapas de debug el desarrollo de software para la USRP.
+Creamos las carpetas de trabajo, este paso podria realizarse en otra carpeta y tendria los mismo resultados, pero se recomienda iniciar la instalacion con un cierto nivel de orden ya que asi se puede explorar la posibilidad de instalar diferentes versiones de UHD, lo que podria resultar util en las etapas de debug el desarrollo de software para la USRP.
   
+```
 $ mkdir -p ~/src
+```
   
-- Instalamos UHD v4.3.0.0, la misma version que los drivers instalados en la USRP, esta paso es crucial por lo que recomienda tener especial cuidado.
+Instalamos UHD v4.3.0.0, la misma version que los drivers instalados en la USRP, este paso es crucial por lo que recomienda tener especial cuidado.
 
+```
 $ cd ~/src    
 $ git clone --branch UHD-4.3 https://github.com/ettusresearch/uhd.git uhd
 $ mkdir uhd/host/build
@@ -115,58 +116,68 @@ $ cmake ..
 $ make -j4
 $ sudo make install
 $ sudo ldconfig
+```
 
-- Descargamos los archivos o "imagen" para los drives del FPGA.
+Descargamos los archivos o "imagen" para los drives del FPGA.
 
+```
 $ sudo uhd_images_downloader
+```
 
-- Instalamos GNU-Radio, la version a demostrado ser la mas establa para la utilizacion de la USRP a sido la v3.8, pero esta version no posee los
-  bloques mas sofisticados para visualizacion de señales, por lo que algunas funciones podrian graficas mas actuales podrian no fucionar con esta version,
-  aun asi, el mismo fabricante recomienda esta version porque ha sido la que mas soporte a recibido y la que mas documentacion posee, en espacial en
-  el manejo de errores presentes dentro del posecamiento de señales.
+Instalamos GNU-Radio, la version que a demostrado ser la mas estable para la utilizacion de la USRP a sido la v3.8, pero esta version no posee los bloques mas sofisticados para visualizacion de señales, por lo que algunas funciones graficas podrian mas actuales podrian no fucionar con esta version, aun asi, el mismo fabricante recomienda esta version porque ha sido la que mas soporte a recibido y la que mas documentacion posee, en espacial en el manejo de errores presentes dentro del posecamiento de señales.
   
+```
 $ cd ~/src 
 $ git clone --branch maint-3.8 --recursive https://github.com/gnuradio/gnuradio.git gnuradio
 $ mkdir gnuradio/build; cd gnuradio/build; cmake ..
 $ make -j4; sudo make install
 $ sudo ldconfig
+```
 
-- Instalamos gr-ettus
+Instalamos gr-ettus
 
+```
 $ cd ~/src 
 $ git clone --branch maint-3.8-uhd4.0 https://github.com/ettusresearch/gr-ettus.git gr-ettus
 $ mkdir gr-ettus/build; cd gr-ettus/build; cmake --DENABLE_QT=True ..
 $ make -j4; sudo make install
 $ sudo ldconfig
+```
 
-- Para asegurarse de que se instalaron las versiones corretas de cada software, probamos los siguientes comandos, ellos deben devolver las version
-  instaladas.
+Para asegurarse de que se instalaron las versiones corretas de cada software, probamos los siguientes comandos, ellos deben devolver las version instaladas.
   
+```
 $ uhd_usrp_probe --version
 $ gnuradio-config-info --version
+```
 
 Existe la alta posibilidad de que aún realizando toda esta instalacion, cuando se intente ejecutar gnuradio, nos aparezca un error referente a 
 "LD_LIBRARY_PATH", para solucionar este problema se hace lo relatado a continuacion.
 
-- debemo modificar un archivo de ejecucion.
+Debemo modificar un archivo de ejecucion.
 
+```
 $ cd
 $ nano ~/.profile
+```
 
-- se abrira un editor de texto, al final de este archivo debemos agregar la siguiente linea de codigo.
+Se abrira un editor de texto, al final de este archivo debemos agregar la siguiente linea de codigo.
 
+```
 $ export PYTHONPATH=/usr/local/lib/python3/dist-packages:$PYTHONPATH
+```
 
-- luego guardamos el archivo con "ctrl+O" y salimos con "ctrl+X", ejecutamos los siguientes comandos
+Luego guardamos el archivo con "ctrl+O" y salimos con "ctrl+X", ejecutamos los siguientes comandos
 
+```
 $ source ~/.profile
 $ sudo ldconfig
+```
 
-- por ultimo, reiniciamos la PC de desarrollo y se daria por finalizada la instalacion de los harremientas basicas para utilizar la USRP E312 con GNU-Radio
+Por ultimo, reiniciamos la PC de desarrollo y se daria por finalizada la instalacion de los harremientas basicas para utilizar la USRP E312 con GNU-Radio
 
-- Para iniciar GNU-Radio, se debe inciar desde la consola, con el comando que se presenta a continuacion.
+***Para iniciar GNU-Radio, se debe inciar desde la consola, con el comando que se presenta a continuacion.
 
+```
 $ gnuradio-companion
-
-
------------------------------------------------
+```
