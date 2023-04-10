@@ -108,10 +108,12 @@ $ mkdir -p ~/src
 - Instalamos UHD v4.3.0.0, la misma version que los drivers instalados en la USRP, esta paso es crucial por lo que recomienda tener especial cuidado.
 
 $ cd ~/src    
-$ git clone --branch UHD-4.3 \
-  https://github.com/ettusresearch/uhd.git uhd
-$ mkdir uhd/host/build; cd uhd/host/build; cmake ..
-$ make -j4; sudo make install
+$ git clone --branch UHD-4.3 https://github.com/ettusresearch/uhd.git uhd
+$ mkdir uhd/host/build
+$ cd uhd/host/build
+$ cmake ..
+$ make -j4
+$ sudo make install
 $ sudo ldconfig
 
 - Descargamos los archivos o "imagen" para los drives del FPGA.
@@ -119,13 +121,12 @@ $ sudo ldconfig
 $ sudo uhd_images_downloader
 
 - Instalamos GNU-Radio, la version a demostrado ser la mas establa para la utilizacion de la USRP a sido la v3.8, pero esta version no posee los
-  bloques mas sofisticados para visualizacion de señales, por lo que algunas funciones podrian graficas mas actuales podrian fucionar con esta version,
+  bloques mas sofisticados para visualizacion de señales, por lo que algunas funciones podrian graficas mas actuales podrian no fucionar con esta version,
   aun asi, el mismo fabricante recomienda esta version porque ha sido la que mas soporte a recibido y la que mas documentacion posee, en espacial en
   el manejo de errores presentes dentro del posecamiento de señales.
   
 $ cd ~/src 
-$ git clone --branch maint-3.8 --recursive \
-  https://github.com/gnuradio/gnuradio.git gnuradio
+$ git clone --branch maint-3.8 --recursive https://github.com/gnuradio/gnuradio.git gnuradio
 $ mkdir gnuradio/build; cd gnuradio/build; cmake ..
 $ make -j4; sudo make install
 $ sudo ldconfig
@@ -133,8 +134,7 @@ $ sudo ldconfig
 - Instalamos gr-ettus
 
 $ cd ~/src 
-$ git clone --branch maint-3.8-uhd4.0 \
-  https://github.com/ettusresearch/gr-ettus.git gr-ettus
+$ git clone --branch maint-3.8-uhd4.0 https://github.com/ettusresearch/gr-ettus.git gr-ettus
 $ mkdir gr-ettus/build; cd gr-ettus/build; cmake --DENABLE_QT=True ..
 $ make -j4; sudo make install
 $ sudo ldconfig
