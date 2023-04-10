@@ -27,9 +27,9 @@ En la PC de desarrollo abrimos una consola de comando he iniciaremos una conexio
 ejecutamos lo siguiente:
 
 `
-$ cd /dev
-$ ls
-$ sudo screen /dev/ttyUSB0 115200`
+cd /dev
+ls
+sudo screen /dev/ttyUSB0 115200`
 
 escribimos nuestras credenciales y accedemos a una nueva pantalla de login, como es una nueva instalacion, el ususarios es root y no hay contraseña, 
 una vez dentro, haremos lo siguiente.
