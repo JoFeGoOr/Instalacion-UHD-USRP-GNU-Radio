@@ -79,7 +79,7 @@ $ ifconfig
 
 Ya con la USRP configurada y con su ip bien asignada, podemos continuar con la instalacion del software necesario para realizar procesamiento de señales, cabe destacar que para concretar la conexion con la USRP, se debe configurar una conexion de red cableada de manera manual, ya que hasta la fecha, la USRP no ha demostrado utilizar el protocolo DHCP, para asegurarnos de que la conexion se configuro con exito, debemos desde la PC, realizar un ping hacia el dispositivo.
 
-# instalacion en PC Host
+# Instalacion en PC Host
 
 Ya seguros de que la comunicacion entre PC y la USRP, procedemos a instalar todo el software necesario para usar GNU-Radio junto a la USRP e312,
 esta instalacion tomo como base, el sistema operativo Ubuntu 20.04 LTS, pero puede ser llevado a demas distribuciones teniendo cuidado de instalar las
