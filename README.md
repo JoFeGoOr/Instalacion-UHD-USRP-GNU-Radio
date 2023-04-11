@@ -164,7 +164,7 @@ $ nano ~/.profile
 Se abrira un editor de texto, al final de este archivo debemos agregar la siguiente linea de codigo.
 
 ```
-$ export PYTHONPATH=/usr/local/lib/python3/dist-packages:$PYTHONPATH
+export PYTHONPATH=/usr/local/lib/python3/dist-packages:$PYTHONPATH
 ```
 
 Luego guardamos el archivo con "ctrl+O" y salimos con "ctrl+X", ejecutamos los siguientes comandos
@@ -176,7 +176,7 @@ $ sudo ldconfig
 
 Por ultimo, reiniciamos la PC de desarrollo y se daria por finalizada la instalacion de los harremientas basicas para utilizar la USRP E312 con GNU-Radio
 
-***Para iniciar GNU-Radio, se debe inciar desde la consola, con el comando que se presenta a continuacion.
+***Para iniciar GNU-Radio, se debe inciar desde la consola, con el comando que se presenta a continuacion.***
 
 ```
 $ gnuradio-companion
