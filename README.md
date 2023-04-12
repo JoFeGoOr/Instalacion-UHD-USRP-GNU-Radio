@@ -27,28 +27,28 @@ En la PC de desarrollo abrimos una consola de comando he iniciaremos una conexio
 Ejecutamos lo siguiente:
 
 ```
-$ cd /dev
-$ ls
-$ sudo screen /dev/ttyUSB0 115200
+cd /dev
+ls
+sudo screen /dev/ttyUSB0 115200
 ```
 
 Escribimos nuestras credenciales y accedemos a una nueva pantalla de login, como es una nueva instalacion, el ususarios es root y no hay contraseña, una vez dentro, haremos lo siguiente.
 
 ```
-$ uhd_find_devices
+uhd_find_devices
 ```
 
 Para asegurarnos que instalamos la vesion correcta de UHD (v4.3.0.0), ya seguros continuamos con la configuracion de la USRP.
 
 ```
-$ ifconfig
+ifconfig
 ```
 
 Notaremos que la USRP no tiene una direcion IP y debemos configurarla de manera estica, para ello haremos lo siguiente.
 
 ```
-$ cd /etc/network
-$ vim interfaces 
+cd /etc/network
+vim interfaces 
 ```
 
 Se nos abrira un editor de texto, debemos presionar la tecla "esc" y luego la tecla "i" para entrar en modo insert, en este modo añadiremos el siguiente texto:
@@ -66,13 +66,13 @@ $ netmask 255.255.255.0
 Presionamos la tecla "esc", escribimos :wq y enter para guardar un archivo llamado "interfaces" en la carpeta "/etc/network", ejecutamos el archivo:
 
 ```
-$ ifup eth0
+ifup eth0
 ```
 
 Con el comando a continuacion, podemos asegurar que la asignacino de la ip de manera estatica se realizo de manera satisfactoria, recordar que la IP estatica para la conexion lan es 192.168.10.42
 
 ```
-$ ifconfig
+ifconfig
 ```
 
 ***Con esto ya podemos constatar que la USRP esta con una IP estatica lista para ser usada. Cabe destacar que con esta forma, cada vez que queramos utilizar la USRP debemos accedar a ella mediante el comando screen y ejecutar el archivo "interfaces" para que se le asigne su respectiva IP.***
@@ -88,67 +88,67 @@ dependencias correctas.
 Actualizamos las bibliotecas y las dependencias ya instaladas.
 
 ```
-$ sudo apt update
-$ sudo apt upgrade
-$ sudo dpkg-reconfigure dash
+sudo apt update
+sudo apt upgrade
+sudo dpkg-reconfigure dash
 ```
 
 Seleccionamos la opcion "no"
 
 ```
-$ sudo apt install git cmake g++ libboost-all-dev libgmp-dev swig python3-numpy python3-mako python3-sphinx python3-lxml doxygen libfftw3-dev libsdl1.2-dev libgsl-dev libqwt-qt5-dev libqt5opengl5-dev python3-pyqt5 liblog4cpp5-dev libzmq3-dev python3-yaml python3-click python3-click-plugins python3-zmq python3-scipy python3-gi python3-gi-cairo gobject-introspection gir1.2-gtk-3.0 build-essential libusb-1.0-0-dev python3-docutils python3-setuptools python3-ruamel.yaml python-is-python3
+sudo apt install git cmake g++ libboost-all-dev libgmp-dev swig python3-numpy python3-mako python3-sphinx python3-lxml doxygen libfftw3-dev libsdl1.2-dev libgsl-dev libqwt-qt5-dev libqt5opengl5-dev python3-pyqt5 liblog4cpp5-dev libzmq3-dev python3-yaml python3-click python3-click-plugins python3-zmq python3-scipy python3-gi python3-gi-cairo gobject-introspection gir1.2-gtk-3.0 build-essential libusb-1.0-0-dev python3-docutils python3-setuptools python3-ruamel.yaml python-is-python3
 ```
   
 Creamos las carpetas de trabajo, este paso podria realizarse en otra carpeta y tendria los mismo resultados, pero se recomienda iniciar la instalacion con un cierto nivel de orden ya que asi se puede explorar la posibilidad de instalar diferentes versiones de UHD, lo que podria resultar util en las etapas de debug el desarrollo de software para la USRP.
   
 ```
-$ mkdir -p ~/src
+mkdir -p ~/src
 ```
   
 Instalamos UHD v4.3.0.0, la misma version que los drivers instalados en la USRP, este paso es crucial por lo que recomienda tener especial cuidado.
 
 ```
-$ cd ~/src    
-$ git clone --branch UHD-4.3 https://github.com/ettusresearch/uhd.git uhd
-$ mkdir uhd/host/build
-$ cd uhd/host/build
-$ cmake ..
-$ make -j4
-$ sudo make install
-$ sudo ldconfig
+cd ~/src    
+git clone --branch UHD-4.3 https://github.com/ettusresearch/uhd.git uhd
+mkdir uhd/host/build
+cd uhd/host/build
+cmake ..
+make -j4
+sudo make install
+sudo ldconfig
 ```
 
 Descargamos los archivos o "imagen" para los drives del FPGA.
 
 ```
-$ sudo uhd_images_downloader
+sudo uhd_images_downloader
 ```
 
 Instalamos GNU-Radio, la version que a demostrado ser la mas estable para la utilizacion de la USRP a sido la v3.8, pero esta version no posee los bloques mas sofisticados para visualizacion de señales, por lo que algunas funciones graficas podrian mas actuales podrian no fucionar con esta version, aun asi, el mismo fabricante recomienda esta version porque ha sido la que mas soporte a recibido y la que mas documentacion posee, en espacial en el manejo de errores presentes dentro del posecamiento de señales.
   
 ```
-$ cd ~/src 
-$ git clone --branch maint-3.8 --recursive https://github.com/gnuradio/gnuradio.git gnuradio
-$ mkdir gnuradio/build; cd gnuradio/build; cmake ..
-$ make -j4; sudo make install
-$ sudo ldconfig
+cd ~/src 
+git clone --branch maint-3.8 --recursive https://github.com/gnuradio/gnuradio.git gnuradio
+mkdir gnuradio/build; cd gnuradio/build; cmake ..
+make -j4; sudo make install
+sudo ldconfig
 ```
 
 Instalamos gr-ettus
 
 ```
-$ cd ~/src 
-$ git clone --branch maint-3.8-uhd4.0 https://github.com/ettusresearch/gr-ettus.git gr-ettus
-$ mkdir gr-ettus/build; cd gr-ettus/build; cmake --DENABLE_QT=True ..
-$ make -j4; sudo make install
-$ sudo ldconfig
+cd ~/src 
+git clone --branch maint-3.8-uhd4.0 https://github.com/ettusresearch/gr-ettus.git gr-ettus
+mkdir gr-ettus/build; cd gr-ettus/build; cmake --DENABLE_QT=True ..
+make -j4; sudo make install
+sudo ldconfig
 ```
 
 Para asegurarse de que se instalaron las versiones corretas de cada software, probamos los siguientes comandos, ellos deben devolver las version instaladas.
   
 ```
-$ uhd_usrp_probe --version
-$ gnuradio-config-info --version
+uhd_usrp_probe --version
+gnuradio-config-info --version
 ```
 
 Existe la alta posibilidad de que aún realizando toda esta instalacion, cuando se intente ejecutar gnuradio, nos aparezca un error referente a 
@@ -157,8 +157,8 @@ Existe la alta posibilidad de que aún realizando toda esta instalacion, cuando 
 Debemo modificar un archivo de ejecucion.
 
 ```
-$ cd
-$ nano ~/.profile
+cd
+nano ~/.profile
 ```
 
 Se abrira un editor de texto, al final de este archivo debemos agregar la siguiente linea de codigo.
@@ -170,8 +170,8 @@ export PYTHONPATH=/usr/local/lib/python3/dist-packages:$PYTHONPATH
 Luego guardamos el archivo con "ctrl+O" y salimos con "ctrl+X", ejecutamos los siguientes comandos
 
 ```
-$ source ~/.profile
-$ sudo ldconfig
+source ~/.profile
+sudo ldconfig
 ```
 
 Por ultimo, reiniciamos la PC de desarrollo y se daria por finalizada la instalacion de los harremientas basicas para utilizar la USRP E312 con GNU-Radio
@@ -179,5 +179,5 @@ Por ultimo, reiniciamos la PC de desarrollo y se daria por finalizada la instala
 ***Para iniciar GNU-Radio, se debe inciar desde la consola, con el comando que se presenta a continuacion.***
 
 ```
-$ gnuradio-companion
+gnuradio-companion
 ```
