@@ -113,7 +113,7 @@ git clone --branch UHD-4.3 https://github.com/ettusresearch/uhd.git uhd
 mkdir uhd/host/build
 cd uhd/host/build
 cmake ..
-make -j4
+make -j8
 sudo make install
 sudo ldconfig
 ```
@@ -129,8 +129,11 @@ Instalamos GNU-Radio, la version que a demostrado ser la mas estable para la uti
 ```
 cd ~/src 
 git clone --branch maint-3.8 --recursive https://github.com/gnuradio/gnuradio.git gnuradio
-mkdir gnuradio/build; cd gnuradio/build; cmake ..
-make -j4; sudo make install
+mkdir gnuradio/build 
+cd gnuradio/build 
+cmake ..
+make -j8 
+sudo make install
 sudo ldconfig
 ```
 
@@ -139,8 +142,11 @@ Instalamos gr-ettus
 ```
 cd ~/src 
 git clone --branch maint-3.8-uhd4.0 https://github.com/ettusresearch/gr-ettus.git gr-ettus
-mkdir gr-ettus/build; cd gr-ettus/build; cmake --DENABLE_QT=True ..
-make -j4; sudo make install
+mkdir gr-ettus/build 
+cd gr-ettus/build 
+cmake --DENABLE_QT=True ..
+make -j8 
+sudo make install
 sudo ldconfig
 ```
 
